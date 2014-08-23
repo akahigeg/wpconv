@@ -21,13 +21,13 @@ example:
     $ wpconv convert wordpress.2014-08-21.xml -o /tmp -n id
 
 This example creates Markdown files from Wordpress export XML.
-The output directory is /tmp and the output filenames are based on Wordpress post_id.
+The output directory is /tmp and the output filenames are based on Wordpress post_id in this case.
 
 `-o` is to specify the output direcoty.
 
 `-n` is to specify the format of filename.
 
-`-t` and `-f` are advanced options to customize output. If you would like to use these options, you should write an erb template or some ruby script code for the filter.
+`-t` and `-f` are advanced options to customize output. If you would like to use these options, you should write an erb template or some ruby code.
 See templating and filter sections for more details.
 
 ## Templating
@@ -51,32 +51,32 @@ You should write some ruby code for creating a custom filter.
 The example below is a built in filter 'none'.
 All filter classes are under `Wpconv::Filter` module. And the class name is the camelized file name.
 
-   module Wpconv
-     module Filter
-       class None
-         def self.apply(source_content)
-           source_content
-         end
-       end
-     end
-   end
+    module Wpconv
+      module Filter
+        class None
+          def self.apply(source_content)
+            source_content
+          end
+        end
+      end
+    end
 
 The more example creating 'my_filter'.
 
-   module Wpconv
-     module Filter
-       class MyFilter
-         def self.apply(source_content)
-           source_content.tap do |content|
-             content.gsub!(/foo/, 'bar')
-
-             # write the filter logic here...
-
-           end
-         end
-       end
-     end
-   end
+    module Wpconv
+      module Filter
+        class MyFilter
+          def self.apply(source_content)
+            source_content.tap do |content|
+              content.gsub!(/foo/, 'bar')
+ 
+              # write the filter logic here...
+ 
+            end
+          end
+        end
+      end
+    end
 
 Specify `-f` option if you would like to use your filter.
 
