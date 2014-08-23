@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Wpconv::Converter do
-  it "sample" do
-    expect(1).to eq 1
+  before do
+    # Wpconv::Converter.new.run(wp_xml_path, options)
   end
 end

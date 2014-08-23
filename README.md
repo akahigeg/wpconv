@@ -11,23 +11,23 @@ Converting Wordpress export XML to Markdown(or other format).
     wpconv convert WP_XML_PATH
 
     Options:
-      -o, [--output-dir=/path/to/output_dir]                
-      -t, [--template=/path/to/custom_template.erb]         
-      -n, [--filename-format=date-name(default), name, id]  
-      -f, [--filter=/path/to/custom_filter.rb]    
+      -o, [--output-dir=/path/to/output_dir]                             
+      -t, [--template=/path/to/your_template.erb]                        
+      -n, [--filename-format=date-name(default), name or id]             
+      -f, [--filter=markdown(default), none or /path/to/your_filter.rb]  
 
 example:
 
     $ wpconv convert wordpress.2014-08-21.xml -o /tmp -n id
 
-This example command creates Markdown files from Wordpress export XML.
+This example creates Markdown files from Wordpress export XML.
 The output directory is /tmp and the output filenames are based on Wordpress post_id.
 
-`-o` is option to specify the output direcoty.
+`-o` is to specify the output direcoty.
 
-`-n` is option to specify the format of filename.
+`-n` is to specify the format of filename.
 
-`-t` and `-f` are advansed options to customize output. If you would like to use these options, you should write erb template or ruby script code.
+`-t` and `-f` are advanced options to customize output. If you would like to use these options, you should write an erb template or some ruby script code for the filter.
 See templating and filter sections for more details.
 
 ## Templating
@@ -35,16 +35,52 @@ See templating and filter sections for more details.
 You can create a custom erb template to adjust outputs as you like.
 
 `@item` and `@channel` are available for template valiables.
-These are Hash objects storing data.
+These are Hash objects including wordpress items and channel data.
 
 Specify `-t` option if you would like to use your template.
 
-    $ wpconv convert wordpress.2014-08-21.xml -o /tmp -t my_markdown.md.erb
+    $ wpconv convert wordpress.2014-08-21.xml -o /tmp -t my_markdown.erb
 
 ## Filter
 
-You can use filter for a camplicate converting logic.
-Filter affects content of items.
+You can use a custom filter for a camplicate converting logic.
+A filter affects @item[:content].
+
+You should write some ruby code for creating a custom filter.
+
+The example below is a built in filter 'none'.
+All filter classes are under `Wpconv::Filter` module. And the class name is the camelized file name.
+
+   module Wpconv
+     module Filter
+       class None
+         def self.apply(source_content)
+           source_content
+         end
+       end
+     end
+   end
+
+The more example creating 'my_filter'.
+
+   module Wpconv
+     module Filter
+       class MyFilter
+         def self.apply(source_content)
+           source_content.tap do |content|
+             content.gsub!(/foo/, 'bar')
+
+             # write the filter logic here...
+
+           end
+         end
+       end
+     end
+   end
+
+Specify `-f` option if you would like to use your filter.
+
+    $ wpconv convert wordpress.2014-08-21.xml -o /tmp -f my_filter.rb
 
 ## Contributing
 
