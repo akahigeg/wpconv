@@ -1,0 +1,9 @@
+---
+title:  <%= @item[:title] %>
+date:   <%= @item[:post_date] %>
+layout: <%= @item[:post_type] %>
+categories: [<%= @item[:categories].join(',') %>]
+tags: [<%= @item[:tags].join(',') %>]
+---
+
+<%= @item[:content] %>

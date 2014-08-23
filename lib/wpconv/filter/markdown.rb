@@ -3,7 +3,7 @@ require 'nokogiri'
 module Wpconv
   module Filter
     class Markdown
-      # see http://daringfireball.net/projects/markdown/syntax
+      # see. http://daringfireball.net/projects/markdown/syntax
 
       BackslashEscapedCharacters = %w(\\ ` * _ { } [ ] \( \) # + - . !) 
 
@@ -68,13 +68,13 @@ module Wpconv
           # Image
   
           # Table?
-          # この時点で本文内にHTMLタグが残っていたら警告
         end
 
       end
-        def self.decode_markup_symbol(code)
-          code.gsub('&lt;', '<').gsub('&gt;', '>').gsub('&amp;', '&')
-        end
+
+      def self.decode_markup_symbol(code)
+        code.gsub('&lt;', '<').gsub('&gt;', '>').gsub('&amp;', '&')
+      end
     end
   end
 end
