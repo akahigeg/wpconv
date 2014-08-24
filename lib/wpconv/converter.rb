@@ -37,6 +37,8 @@ module Wpconv
       doc = ::Nokogiri::XML(File.open(@wp_xml_path).read)
       @channel = WpXML::Channel.parse(doc.at('channel'))
 
+      @convert_counts = {page: 0, post: 0, other: 0}
+
       doc.search('item').each do |doc_item|
         @item = WpXML::Item.parse(doc_item)
 
@@ -53,9 +55,14 @@ module Wpconv
           converted =  erb.result(binding)
           f.write(converted)
         end
+
+        increase_convert_count
+
+        print "."
       end
 
       print "done.\n"
+      print "#{@convert_counts[:page]} pages, #{@convert_counts[:post]} posts and #{@convert_counts[:other]} something items are converted.\n"
     end
 
     def setup_output_dirs
@@ -66,6 +73,14 @@ module Wpconv
       }
       @output_dirs.each do |k, output_dir|
         FileUtils.mkdir_p(output_dir)
+      end
+    end
+
+    def increase_convert_count
+      if @convert_counts.has_key? @item[:post_type].to_sym
+        @convert_counts[@item[:post_type].to_sym] += 1
+      else
+        @convert_counts[:other] += 1
       end
     end
 
