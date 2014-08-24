@@ -37,6 +37,18 @@ You can create a custom erb template to adjust outputs as you like.
 template valiables `@item` and `@channel` are available.
 These are Hash objects including wordpress items and channel data.
 
+This is the default template.
+
+    ---
+    title:  <%= @item[:title] %>
+    date:   <%= @item[:post_date] %>
+    layout: <%= @item[:post_type] %>
+    categories: [<%= @item[:categories].join(',') %>]
+    tags: [<%= @item[:tags].join(',') %>]
+    ---
+    
+    <%= @item[:content] %>
+
 Specify `-t` option if you would like to use your template.
 
     $ wpconv convert wordpress.2014-08-21.xml -o /tmp -t my_markdown.erb
