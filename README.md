@@ -34,7 +34,7 @@ See templating and filter sections for more details.
 
 You can create a custom erb template to adjust outputs as you like.
 
-`@item` and `@channel` are available for template valiables.
+template valiables `@item` and `@channel` are available.
 These are Hash objects including wordpress items and channel data.
 
 Specify `-t` option if you would like to use your template.
@@ -49,7 +49,7 @@ A filter affects @item[:content].
 You should write some ruby code for creating a custom filter.
 
 The example below is a built in filter 'none'.
-All filter classes are under `Wpconv::Filter` module. And the class name is the camelized file name.
+All filter classes should be under `Wpconv::Filter` module. And the class name should be the camelized file name.
 
     module Wpconv
       module Filter
@@ -61,7 +61,7 @@ All filter classes are under `Wpconv::Filter` module. And the class name is the 
       end
     end
 
-The more example creating 'my_filter'.
+Another example, creating 'my_filter'.
 
     module Wpconv
       module Filter

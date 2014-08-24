@@ -21,10 +21,6 @@ module Wpconv
     def run(wp_xml_path, options = {})
       @wp_xml_path = wp_xml_path
 
-      doc = ::Nokogiri::XML(File.open(wp_xml_path).read)
-
-      @channel = WpXML::Channel.parse(doc.at('channel'))
-
       @template = options[:template] || DEFAULT_OPTIONS[:template]
       erb = File.open(@template) {|f| ERB.new(f.read)}
 
@@ -37,6 +33,9 @@ module Wpconv
 
       print "converting...\n"
       print_convert_settings
+
+      doc = ::Nokogiri::XML(File.open(@wp_xml_path).read)
+      @channel = WpXML::Channel.parse(doc.at('channel'))
 
       doc.search('item').each do |doc_item|
         @item = WpXML::Item.parse(doc_item)

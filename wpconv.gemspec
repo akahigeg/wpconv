@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["akahigeg@gmail.com"]
   spec.summary       = %q{Converting Wordpress export XML to other format.}
   spec.description   = %q{Converting Wordpress export XML to other format.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/akahigeg/wpconv"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_dependency "thor"
   spec.add_dependency "nokogiri"
-  spec.add_dependency "active_support"
+  spec.add_dependency "activesupport"
 end

@@ -22,7 +22,6 @@ module Wpconv
       end
 
       def self.convert_html_tags(escaped_source_content)
-        # dupした方がいい？
         escaped_source_content.tap do |content|
           # Heading
           {
